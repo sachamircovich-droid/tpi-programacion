@@ -1,4 +1,5 @@
 import csv
+nombre_archivo = "paises.csv"
 
 
 def pedir_entero(mensaje, minimo=0):
@@ -99,20 +100,28 @@ def sub_menu_6():
 def nuevo_pais():
     print("\nREGISRO DE NUEVO PAIS")
 
-    nombre = pedir_texto("Nombre: ")
+    nombre = pedir_texto("\nNombre: ")
     poblacion = pedir_entero("Poblacion: ")
     superficie = pedir_entero("Superficie: ")
     continente = pedir_texto("Continente: ")
 
-    return ([nombre,poblacion,superficie,continente])
+    return {
+        "nombre": nombre,
+        "poblacion": poblacion,
+        "superficie": superficie,
+        "continente": continente
+    }
 
 
-def agregar_pais():
+def agregar_pais(nombre_archivo):
 
-    with open("paises.csv","a",encoding="utf-8",newline="") as archivo:
-        escritor = csv.writer(archivo)
+    with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
+        campos = ["nombre", "poblacion", "superficie", "continente"]
+
+        escritor = csv.DictWriter(archivo, fieldnames=campos)
         escritor.writerow(nuevo_pais())
-    print(f"\nPais guardado correctamente en el archivo CSV. ")
+
+    print("\nPaís guardado correctamente en el archivo CSV.")
         
 
 op = -1
@@ -129,7 +138,7 @@ while op != 0:
     op = pedir_entero("\nSeleccione una opción (0-6): ", minimo=0)
 
     if op == 1:
-        agregar_pais()
+        agregar_pais(nombre_archivo)
     elif op ==2:
         pass
     elif op == 3:
