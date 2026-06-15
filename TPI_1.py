@@ -122,7 +122,26 @@ def agregar_pais(nombre_archivo):
         escritor.writerow(nuevo_pais())
 
     print("\nPaís guardado correctamente en el archivo CSV.")
-        
+
+
+def buscar_pais(nombre_archivo):
+
+    pais = pedir_texto("Ingresar el nombre del país a buscar: ")
+    encontrado = False
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+
+        for fila in lector:
+            if fila["nombre"] == pais:
+                print(f"\nNombre: {fila['nombre']}")
+                print(f"Población: {fila['poblacion']}")
+                print(f"Superficie: {fila['superficie']}")
+                print(f"Continente: {fila['continente']}")
+                encontrado = True
+                input("\nPresione una tecla para continuar.")
+
+        if not encontrado:
+            print("\nNo se encontro un pais con ese nombre")
 
 op = -1
 while op != 0:
@@ -142,7 +161,7 @@ while op != 0:
     elif op ==2:
         pass
     elif op == 3:
-        pass
+        buscar_pais(nombre_archivo)
     elif op == 4:
         sub_menu_4()
     elif op == 5:
