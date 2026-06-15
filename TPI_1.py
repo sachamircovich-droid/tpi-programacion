@@ -15,8 +15,8 @@ def pedir_entero(mensaje, minimo=0):
 
 def pedir_texto(mensaje):
     while True:
-        valor = input(mensaje).strip()
-        if valor == "" or valor.isdigit():
+        valor = input(mensaje).strip().title()
+        if valor == "" or not valor.isalpha():
             print("Error: No debe ingresar numero ni ingresar un espacio vacio")
             continue
         else:
