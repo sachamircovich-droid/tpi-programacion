@@ -1,11 +1,28 @@
-def pedir_entero(mensaje):
+import csv
+
+
+def pedir_entero(mensaje, minimo=0):
+    
     while True:
         try:
-            return int(input(mensaje))
+            valor = int(input(mensaje))
+            if valor < minimo:
+                print(f"Error: El valor debe ser mayor o igual a {minimo}.")
+                continue  
+            return valor          
         except ValueError:
-            print("\n[Error] Tipo de dato inválido. Debe ingresar un número entero.")
+            print("Error: Ingresar un número entero válido.")
 
-def sub_menu_1():
+def pedir_texto(mensaje):
+    while True:
+        valor = input(mensaje).strip()
+        if valor == "" or valor.isdigit():
+            print("Error: No debe ingresar numero ni ingresar un espacio vacio")
+            continue
+        else:
+            return valor
+            
+def sub_menu_4():
 
     op = -1
     while op != 0:
@@ -14,7 +31,7 @@ def sub_menu_1():
         print("     3. Rango de Superficie")
         print("     0. Salir")
 
-        op = pedir_entero("\nIngresar una opcion: ")
+        op = pedir_entero("Seleccione una opción (0-3): ", minimo=0)
 
         if op == 1:
             pass
@@ -24,7 +41,7 @@ def sub_menu_1():
             pass
 
 
-def sub_menu_2_1():
+def sub_menu_5_1():
 
     op = -1
     while op != 0:
@@ -32,7 +49,7 @@ def sub_menu_2_1():
         print("        2. Descendente")
         print("        0. Salir")
 
-        op = pedir_entero("\nIngresar una opcion: ")
+        op = pedir_entero("Seleccione una opción (0-2): ", minimo=0)
 
         if op == 1:
             pass
@@ -40,7 +57,7 @@ def sub_menu_2_1():
             pass
 
 
-def sub_menu_2():
+def sub_menu_5():
 
     op = -1
     while op != 0:
@@ -49,16 +66,16 @@ def sub_menu_2():
         print("     3. Superficie")
         print("     0. Salir")
 
-        op = pedir_entero("\nIngresar una opcion: ")
+        op = pedir_entero("Seleccione una opción (0-3): ", minimo=0)
 
         if op == 1:
             pass
         elif op == 2:
             pass
         elif op == 3:
-            sub_menu_2_1()
+            sub_menu_5_1()
 
-def sub_menu_3():
+def sub_menu_6():
 
     op = -1
     while op != 0:
@@ -68,7 +85,7 @@ def sub_menu_3():
         print("     4. Cantidad de países por continente ")
         print("     0. Salir")
 
-        op = pedir_entero("\nIngresar una opcion: ")
+        op = pedir_entero("Seleccione una opción (0-4): ", minimo=0)
 
         if op == 1:
             pass
@@ -79,6 +96,24 @@ def sub_menu_3():
         elif op == 4:
             pass
 
+def nuevo_pais():
+    print("\nREGISRO DE NUEVO PAIS")
+
+    nombre = pedir_texto("Nombre: ")
+    poblacion = pedir_entero("Poblacion: ")
+    superficie = pedir_entero("Superficie: ")
+    continente = pedir_texto("Continente: ")
+
+    return ([nombre,poblacion,superficie,continente])
+
+
+def agregar_pais():
+
+    with open("paises.csv","a",encoding="utf-8",newline="") as archivo:
+        escritor = csv.writer(archivo)
+        escritor.writerow(nuevo_pais())
+    print(f"\nPais guardado correctamente en el archivo CSV. ")
+        
 
 op = -1
 while op != 0:
@@ -91,21 +126,22 @@ while op != 0:
     print("6. Mostrar estadisticas")
     print("0. Salir")
 
-    op = pedir_entero("\nIngresar una opcion: ")
+    op = pedir_entero("\nSeleccione una opción (0-6): ", minimo=0)
 
     if op == 1:
-        pass
+        agregar_pais()
     elif op ==2:
         pass
     elif op == 3:
         pass
     elif op == 4:
-        sub_menu_1()
+        sub_menu_4()
     elif op == 5:
-        sub_menu_2()
+        sub_menu_5()
     elif op == 6:
-        sub_menu_3()
+        sub_menu_6()
     elif op == 0:
         print("\nFin del preoceso.")
+    
 
 
