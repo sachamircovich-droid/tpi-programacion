@@ -24,23 +24,87 @@ def pedir_texto(mensaje):
         else:
             return valor
             
-def sub_menu_4():
+
+def filtrar_continente(nombre_archivo):
+
+    encontrado = False
+    continente = pedir_texto("\nIngresar continente: ")
+    print()
+
+    with open(nombre_archivo,"r",encoding="utf-8") as archivo:
+        
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            if fila['continente'] == continente:
+                print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
+                encontrado = True
+
+        if not encontrado:
+            print(f"\nNo se encontro pais en el contienente {continente}")
+
+
+
+
+
+def filtrar_poblacion(nombre_archivo):
+    poblacion_min = pedir_entero("\nPoblación mínima: ")
+    poblacion_max = pedir_entero("Población máxima: ", minimo=poblacion_min)
+    print()
+
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+
+        encontrado = False
+
+        for fila in lector:
+            poblacion = int(fila["poblacion"])
+
+            if poblacion_min <= poblacion <= poblacion_max:
+                print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
+                encontrado = True
+
+        if not encontrado:
+            print("No hay países en ese rango.")
+    
+
+def filtrar_superficie(nombre_archivo):
+    superficie_min = pedir_entero("\nSuperficie mínima: ")
+    superficie_max = pedir_entero("Superficie máxima: ", minimo=superficie_min)
+    print()
+
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+
+        encontrado = False
+
+        for fila in lector:
+            superficie = int(fila["superficie"])
+
+            if superficie_min <= superficie <= superficie_max:
+                print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
+                encontrado = True
+
+        if not encontrado:
+            print("No hay países en ese rango.")
+
+def sub_menu_4(nombre_archivo):
 
     op = -1
     while op != 0:
-        print("\n     1. Contienete")
+        print("\nFiltrar por:")
+        print("     1. Contienete")
         print("     2. Rango de Poblacion")
         print("     3. Rango de Superficie")
         print("     0. Salir")
 
-        op = pedir_entero("Seleccione una opción (0-3): ", minimo=0)
+        op = pedir_entero("\nSeleccione una opción (0-3): ", minimo=0)
 
         if op == 1:
-            pass
+            filtrar_continente(nombre_archivo)
         elif op == 2:
-            pass
+            filtrar_poblacion(nombre_archivo)
         elif op == 3:
-            pass
+            filtrar_superficie(nombre_archivo)
 
 
 def sub_menu_5_1():
@@ -202,7 +266,7 @@ while op != 0:
     elif op == 3:
         buscar_pais(nombre_archivo)
     elif op == 4:
-        sub_menu_4()
+        sub_menu_4(nombre_archivo)
     elif op == 5:
         sub_menu_5()
     elif op == 6:
