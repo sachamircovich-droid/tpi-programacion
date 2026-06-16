@@ -1,5 +1,6 @@
 import csv
 nombre_archivo = "paises.csv"
+campos = ["nombre", "poblacion", "superficie", "continente"]
 
 
 def pedir_entero(mensaje, minimo=0):
@@ -113,10 +114,9 @@ def nuevo_pais():
     }
 
 
-def agregar_pais(nombre_archivo):
+def agregar_pais(nombre_archivo,campos):
 
     with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
-        campos = ["nombre", "poblacion", "superficie", "continente"]
 
         escritor = csv.DictWriter(archivo, fieldnames=campos)
         escritor.writerow(nuevo_pais())
@@ -143,6 +143,45 @@ def buscar_pais(nombre_archivo):
         if not encontrado:
             print("\nNo se encontro un pais con ese nombre")
 
+def actualizar_pais(nombre_archivo,campos):
+
+    paises = []
+
+    pais = pedir_texto("Ingresar el nombre del país a buscar: ")
+
+    encontrado = False
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+
+        lector = csv.DictReader(archivo)
+        for fila in lector:
+            if fila["nombre"] == pais:
+                print(f"\nNombre: {fila['nombre']}")
+                print(f"Población: {fila['poblacion']}")
+                print(f"Superficie: {fila['superficie']}")
+                print(f"Continente: {fila['continente']}")
+                encontrado = True
+
+                print("\nActualizar datos")
+
+                fila["poblacion"] = str(pedir_entero("\nNueva población: "))
+                fila["superficie"] = str(pedir_entero("Nueva superficie: "))
+
+            paises.append(fila)
+        
+        if not encontrado:
+            print("\nNo se ecnontro el pais.")
+            return
+        
+
+        with open(nombre_archivo, "w", encoding="utf-8",newline="") as archivo:
+            escritor = csv.DictWriter(archivo,fieldnames=campos)
+            escritor.writeheader()
+            escritor.writerows(paises)
+        
+        print("\nPaís actualizado correctamente.")
+
+
+
 op = -1
 while op != 0:
     print("\nMENU DE OPCIONES")
@@ -157,9 +196,9 @@ while op != 0:
     op = pedir_entero("\nSeleccione una opción (0-6): ", minimo=0)
 
     if op == 1:
-        agregar_pais(nombre_archivo)
+        agregar_pais(nombre_archivo, campos)
     elif op ==2:
-        pass
+        actualizar_pais(nombre_archivo,campos)
     elif op == 3:
         buscar_pais(nombre_archivo)
     elif op == 4:
