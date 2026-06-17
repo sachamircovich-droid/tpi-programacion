@@ -197,11 +197,71 @@ def sub_menu_5(nombre_archivo):
             sub_menu_5_1(paises)
             break
 
+def mayor_menor_poblacion(paises):
+
+    mayor = paises[0]
+    menor = paises[0]
+
+    for pais in paises:
+        if int(pais["poblacion"]) > int(mayor["poblacion"]):
+            mayor = pais
+
+        if int(pais["poblacion"]) < int(menor["poblacion"]):
+            menor = pais
+
+    print(f"\nPaís con mayor población: {mayor['nombre']} ({mayor['poblacion']})")
+    print(f"País con menor población: {menor['nombre']} ({menor['poblacion']})")
+    input("\nPresione una tecla para continuar.")
+
+def prom_poblacion(paises):
+
+    suma = 0
+
+    for pais in paises:
+        suma += int(pais["poblacion"])
+
+    promedio = suma / len(paises)
+
+    print(f"\nPromedio de población: {promedio:.2f}")
+    input("\nPresione una tecla para continuar.")
+
+def prom_superficie(paises):
+
+    suma = 0
+
+    for pais in paises:
+        suma += int(pais["superficie"])
+
+    promedio = suma / len(paises)
+
+    print(f"\nPromedio de superficie: {promedio:.2f}")
+    input("\nPresione una tecla para continuar.")
+
+def cant_continente(paises):
+
+    continentes = {}
+
+    for pais in paises:
+        continente = pais["continente"]
+
+        if continente in continentes:
+            continentes[continente] += 1
+        else:
+            continentes[continente] = 1
+
+    print()
+
+    for continente, cantidad in continentes.items():
+        print(f"{continente}: {cantidad} país(es)")  
+    input("\nPresione una tecla para continuar.")  
+
+
+
 def sub_menu_6(nombre_archivo):
     
     with open(nombre_archivo, "r", encoding="utf-8") as archivo:
         lector = csv.DictReader(archivo)
-        return list(lector)
+        paises = list(lector)
 
     op = -1
     while op != 0:
@@ -211,16 +271,19 @@ def sub_menu_6(nombre_archivo):
         print("     4. Cantidad de países por continente ")
         print("     0. Salir")
 
-        op = pedir_entero("Seleccione una opción (0-4): ", minimo=0)
+        op = pedir_entero("\nSeleccione una opción (0-4): ", minimo=0)
 
         if op == 1:
-            pass
+            mayor_menor_poblacion(paises)
+
         elif op == 2:
-            pass
+            prom_poblacion(paises)
+
         elif op == 3:
-            pass
+            prom_superficie(paises)
+
         elif op == 4:
-            pass
+            cant_continente(paises)
 
 def nuevo_pais():
     print("\nREGISRO DE NUEVO PAIS")
