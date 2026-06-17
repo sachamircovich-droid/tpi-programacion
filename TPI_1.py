@@ -107,7 +107,40 @@ def sub_menu_4(nombre_archivo):
             filtrar_superficie(nombre_archivo)
 
 
-def sub_menu_5_1():
+def mostrar_paises(paises):
+    print()
+    for fila in paises:
+        print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
+
+def ordenar_paises(paises, campo, ascendente=True):
+
+    for i in range(len(paises) - 1):
+        posicion = i
+
+        for j in range(i + 1, len(paises)):
+
+            if campo in ["poblacion", "superficie"]:
+                valor_j = int(paises[j][campo])
+                valor_pos = int(paises[posicion][campo])
+            else:
+                valor_j = paises[j][campo]
+                valor_pos = paises[posicion][campo]
+
+            if ascendente:
+                if valor_j < valor_pos:
+                    posicion = j
+            else:
+                if valor_j > valor_pos:
+                    posicion = j
+
+        paises[i], paises[posicion] = paises[posicion], paises[i]
+
+    return paises
+
+    
+
+
+def sub_menu_5_1(paises):
 
     op = -1
     while op != 0:
@@ -118,12 +151,26 @@ def sub_menu_5_1():
         op = pedir_entero("Seleccione una opción (0-2): ", minimo=0)
 
         if op == 1:
-            pass
+            print("\nOrdenamiento por superficie - ascendente")
+            ordenar_paises(paises,'superficie')
+            mostrar_paises(paises)
+            input("\nPresione una tecla para continuar.")
+            break
+            
         elif op == 2:
-            pass
+            print("\nOrdenamiento por superficie - descendente")
+            ordenar_paises(paises,'superficie',ascendente=False)
+            mostrar_paises(paises)
+            input("\nPresione una tecla para continuar.")
+            break
 
 
-def sub_menu_5():
+def sub_menu_5(nombre_archivo):
+
+    
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+        paises = list(lector)
 
     op = -1
     while op != 0:
@@ -135,13 +182,26 @@ def sub_menu_5():
         op = pedir_entero("Seleccione una opción (0-3): ", minimo=0)
 
         if op == 1:
-            pass
+            print("\nOrdenamiento por nombre")
+            ordenar_paises(paises,'nombre')
+            mostrar_paises(paises)
+            input("\nPresione una tecla para continuar.")
+            break
         elif op == 2:
-            pass
+            print("\nOrdenamiento por poblacion")
+            ordenar_paises(paises,'poblacion')
+            mostrar_paises(paises)
+            input("\nPresione una tecla para continuar.")
+            break
         elif op == 3:
-            sub_menu_5_1()
+            sub_menu_5_1(paises)
+            break
 
-def sub_menu_6():
+def sub_menu_6(nombre_archivo):
+    
+    with open(nombre_archivo, "r", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+        return list(lector)
 
     op = -1
     while op != 0:
@@ -268,9 +328,9 @@ while op != 0:
     elif op == 4:
         sub_menu_4(nombre_archivo)
     elif op == 5:
-        sub_menu_5()
+        sub_menu_5(nombre_archivo)
     elif op == 6:
-        sub_menu_6()
+        sub_menu_6(nombre_archivo)
     elif op == 0:
         print("\nFin del preoceso.")
     
