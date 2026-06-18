@@ -292,6 +292,8 @@ def nuevo_pais():
     poblacion = pedir_entero("Poblacion: ")
     superficie = pedir_entero("Superficie: ")
     continente = pedir_texto("Continente: ")
+    while continente not in ("América", "Europa", "Asia", "África", "Oceanía" ):
+        continente = pedir_texto("Ingrese un nombre válido de continente: ")
 
     return {
         "nombre": nombre,
@@ -300,7 +302,7 @@ def nuevo_pais():
         "continente": continente
     }
 
-
+ 
 def agregar_pais(nombre_archivo,campos):
 
     with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
