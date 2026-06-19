@@ -398,6 +398,8 @@ while op != 0:
         sub_menu_6(nombre_archivo)
     elif op == 0:
         print("\nFin del preoceso.")
+    else:
+        print("\nOpcion incorrecta. Intentelo de nuevo")
     
 
 
