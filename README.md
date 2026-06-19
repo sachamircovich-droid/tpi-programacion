@@ -1,4 +1,4 @@
-# TPI Programación
+# TPI Programación - Sistema de gestión de Países
 
 ## Integrantes
 
@@ -25,7 +25,33 @@ Sistema de gestión de países desarrollado en Python utilizando archivos CSV.
 - README.md
 - .gitignore
 
+## Instrucciones de Uso
+- Tener instalado **Python 3.x**.
+- Contar con el archivo 'paises.csv' en la misma carpeta que el script ejecutable.
 
-Repositorio
+### Ejecución
+Para iniciar el programa, abre tu terminal en el directorio del proyecto y ejecuta:
+
+python TPI_1.py
+
+### Ejemplo de Entradas
+
+REGISRO DE NUEVO PAIS
+
+Nombre: Argentina
+Poblacion: 45696160
+Superficie: 2780400
+Continente: América
+
+### Ejemplo de Salida
+
+FILTRAR PAISES POR CONTINENTE
+
+Argentina       Poblacion: 45696160        Superficie: 2780400         Continente: América        
+Brasil          Poblacion: 211998570       Superficie: 8515767         Continente: América        
+Estados Unidos  Poblacion: 340110990       Superficie: 9833517         Continente: América        
+México          Poblacion: 130861010       Superficie: 1964375         Continente: América 
+
+### Repositorio
 
 https://github.com/sachamircovich-droid/tpi-programacion
