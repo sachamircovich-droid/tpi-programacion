@@ -1,4 +1,5 @@
 import csv
+todos = "lista de todos los países.txt"
 nombre_archivo = "paises.csv"
 campos = ["nombre", "poblacion", "superficie", "continente"]
 
@@ -285,10 +286,42 @@ def sub_menu_6(nombre_archivo):
         elif op == 4:
             cant_continente(paises)
 
-def nuevo_pais():
-    print("\nREGISRO DE NUEVO PAIS")
+def pais_valido(nombre,todos):
+    with open(todos, "r", encoding = "utf-8") as archivo:
+        for i in archivo:
+            if i.strip() == nombre:
+                return True
+    return False
 
-    nombre = pedir_texto("\nNombre: ")
+
+
+
+def nuevo_pais(nombre_archivo,todos):
+    print("\nREGISRO DE NUEVO PAIS")
+    lista =[]
+    with open(nombre_archivo, "r", encoding = "utf-8") as archivo:
+         lector = csv.DictReader(archivo)
+         for pais in lector:
+             lista.append(pais)
+    
+    while True:
+        encontrado = False
+
+        nombre = pedir_texto("\nNombre: ")
+        if pais_valido(nombre,todos) is False:
+            print("El país ingresado no existe. Vuelve a ingresar el nombre")
+            continue
+
+        for i in lista:
+            if i["nombre"] == nombre:
+                print("El país ya se encuentra cargado. Vuelve a ingresar el nombre")
+                encontrado = True
+                break 
+        if encontrado == True:
+            continue
+        else:
+            break
+    
     poblacion = pedir_entero("Poblacion: ")
     superficie = pedir_entero("Superficie: ")
     continente = pedir_texto("Continente: ")
@@ -303,12 +336,12 @@ def nuevo_pais():
     }
 
  
-def agregar_pais(nombre_archivo,campos):
+def agregar_pais(nombre_archivo,campos,todos):
 
     with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
 
         escritor = csv.DictWriter(archivo, fieldnames=campos)
-        escritor.writerow(nuevo_pais())
+        escritor.writerow(nuevo_pais(nombre_archivo,todos))
 
     print("\nPaís guardado correctamente en el archivo CSV.")
 
@@ -385,7 +418,7 @@ while op != 0:
     op = pedir_entero("\nSeleccione una opción (0-6): ", minimo=0)
 
     if op == 1:
-        agregar_pais(nombre_archivo, campos)
+        agregar_pais(nombre_archivo, campos, todos)
     elif op ==2:
         actualizar_pais(nombre_archivo,campos)
     elif op == 3:
