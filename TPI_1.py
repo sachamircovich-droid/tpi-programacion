@@ -4,26 +4,7 @@ nombre_archivo = "paises.csv"
 campos = ["nombre", "poblacion", "superficie", "continente"]
 
 
-def pedir_entero(mensaje, minimo=0):
-    
-    while True:
-        try:
-            valor = int(input(mensaje))
-            if valor < minimo:
-                print(f"Error: El valor debe ser mayor o igual a {minimo}.")
-                continue  
-            return valor          
-        except ValueError:
-            print("Error: Ingresar un número entero válido.")
 
-def pedir_texto(mensaje):
-    while True:
-        valor = input(mensaje).strip().title()
-        if valor == "" or not valor.isalpha():
-            print("Error: No debe ingresar numero ni ingresar un espacio vacio")
-            continue
-        else:
-            return valor
             
 
 def filtrar_continente(nombre_archivo):
@@ -286,66 +267,6 @@ def sub_menu_6(nombre_archivo):
         elif op == 4:
             cant_continente(paises)
 
-def pais_valido(nombre,todos):
-    with open(todos, "r", encoding = "utf-8") as archivo:
-        for i in archivo:
-            if i.strip() == nombre:
-                return True
-    return False
-
-
-
-
-def nuevo_pais(nombre_archivo,todos):
-    print("\nREGISRO DE NUEVO PAIS")
-    lista =[]
-    with open(nombre_archivo, "r", encoding = "utf-8") as archivo:
-         lector = csv.DictReader(archivo)
-         for pais in lector:
-             lista.append(pais)
-    
-    while True:
-        encontrado = False
-
-        nombre = pedir_texto("\nNombre: ")
-        if pais_valido(nombre,todos) is False:
-            print("El país ingresado no existe. Vuelve a ingresar el nombre")
-            continue
-
-        for i in lista:
-            if i["nombre"] == nombre:
-                print("El país ya se encuentra cargado. Vuelve a ingresar el nombre")
-                encontrado = True
-                break 
-        if encontrado == True:
-            continue
-        else:
-            break
-    
-    poblacion = pedir_entero("Poblacion: ")
-    superficie = pedir_entero("Superficie: ")
-    continente = pedir_texto("Continente: ")
-    while continente not in ("América", "Europa", "Asia", "África", "Oceanía" ):
-        continente = pedir_texto("Ingrese un nombre válido de continente: ")
-
-    return {
-        "nombre": nombre,
-        "poblacion": poblacion,
-        "superficie": superficie,
-        "continente": continente
-    }
-
- 
-def agregar_pais(nombre_archivo,campos,todos):
-
-    with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
-
-        escritor = csv.DictWriter(archivo, fieldnames=campos)
-        escritor.writerow(nuevo_pais(nombre_archivo,todos))
-
-    print("\nPaís guardado correctamente en el archivo CSV.")
-
-
 def buscar_pais(nombre_archivo):
 
     pais = pedir_texto("Ingresar el nombre del país a buscar: ")
@@ -403,6 +324,81 @@ def actualizar_pais(nombre_archivo,campos):
         print("\nPaís actualizado correctamente.")
 
 
+def agregar_pais(nombre_archivo,campos,todos):
+
+    with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
+
+        escritor = csv.DictWriter(archivo, fieldnames=campos)
+        escritor.writerow(nuevo_pais(nombre_archivo,todos))
+
+    print("\nPaís guardado correctamente en el archivo CSV.")
+
+def nuevo_pais(nombre_archivo,todos):
+    print("\nREGISRO DE NUEVO PAIS")
+    lista =[]
+    with open(nombre_archivo, "r", encoding = "utf-8") as archivo:
+         lector = csv.DictReader(archivo)
+         for pais in lector:
+             lista.append(pais)
+    
+    while True:
+        encontrado = False
+
+        nombre = pedir_texto("\nNombre: ")
+        if pais_valido(nombre,todos) is False:
+            print("El país ingresado no existe. Vuelve a ingresar el nombre")
+            continue
+
+        for i in lista:
+            if i["nombre"] == nombre:
+                print("El país ya se encuentra cargado. Vuelve a ingresar el nombre")
+                encontrado = True
+                break 
+        if encontrado == True:
+            continue
+        else:
+            break
+    
+    poblacion = pedir_entero("Poblacion: ")
+    superficie = pedir_entero("Superficie: ")
+    continente = pedir_texto("Continente: ")
+    while continente not in ("América", "Europa", "Asia", "África", "Oceanía" ):
+        continente = pedir_texto("Ingrese un nombre válido de continente: ")
+
+    return {
+        "nombre": nombre,
+        "poblacion": poblacion,
+        "superficie": superficie,
+        "continente": continente
+    }
+
+def pais_valido(nombre,todos):
+    with open(todos, "r", encoding = "utf-8") as archivo:
+        for i in archivo:
+            if i.title().strip() == nombre:
+                return True
+    return False        
+
+def pedir_entero(mensaje, minimo=0):
+    
+    while True:
+        try:
+            valor = int(input(mensaje))
+            if valor < minimo:
+                print(f"Error: El valor debe ser mayor o igual a {minimo}.")
+                continue  
+            return valor          
+        except ValueError:
+            print("Error: Ingresar un número entero válido.")
+
+def pedir_texto(mensaje):
+    while True:
+        valor = input(mensaje).strip().title()
+        if valor.replace(" ","").isalpha():
+            return valor            
+        else:
+            print("Error: No debe ingresar numero ni ingresar un espacio vacio")
+            continue
 
 op = -1
 while op != 0:
