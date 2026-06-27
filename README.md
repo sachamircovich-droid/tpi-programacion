@@ -55,3 +55,7 @@ México          Poblacion: 130861010       Superficie: 1964375         Continen
 ### Repositorio
 
 https://github.com/sachamircovich-droid/tpi-programacion
+
+### Link video
+
+https://drive.google.com/drive/folders/1YwGK9oyTMnEFwg4I5nBgcq-PFOx9QpoI?usp=sharing

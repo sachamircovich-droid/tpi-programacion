@@ -4,13 +4,12 @@ nombre_archivo = "paises.csv"
 campos = ["nombre", "poblacion", "superficie", "continente"]
 
 
-
-            
-
 def filtrar_continente(nombre_archivo):
 
     encontrado = False
     continente = pedir_texto("\nIngresar continente: ")
+    while continente not in ("América", "Europa", "Asia", "África", "Oceanía" ):
+        continente = pedir_texto("Ingrese un nombre válido de continente: ")
     print()
 
     with open(nombre_archivo,"r",encoding="utf-8") as archivo:
@@ -23,9 +22,6 @@ def filtrar_continente(nombre_archivo):
 
         if not encontrado:
             print(f"\nNo se encontro pais en el contienente {continente}")
-
-
-
 
 
 def filtrar_poblacion(nombre_archivo):
@@ -69,6 +65,7 @@ def filtrar_superficie(nombre_archivo):
         if not encontrado:
             print("No hay países en ese rango.")
 
+
 def sub_menu_4(nombre_archivo):
 
     op = -1
@@ -94,6 +91,8 @@ def mostrar_paises(paises):
     for fila in paises:
         print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
 
+
+# Ordenamiento de selección directa
 def ordenar_paises(paises, campo, ascendente=True):
 
     for i in range(len(paises) - 1):
@@ -118,8 +117,6 @@ def ordenar_paises(paises, campo, ascendente=True):
         paises[i], paises[posicion] = paises[posicion], paises[i]
 
     return paises
-
-    
 
 
 def sub_menu_5_1(paises):
@@ -158,10 +155,10 @@ def sub_menu_5(nombre_archivo):
     while op != 0:
         print("\n     1. Nombre")
         print("     2. Poblacion")
-        print("     3. Superficie")
+        print("     3. Superficie (ascendente o descendente)")
         print("     0. Salir")
 
-        op = pedir_entero("Seleccione una opción (0-3): ", minimo=0)
+        op = pedir_entero("Seleccione el ordenamiento que desea realizar (0-3): ", minimo=0)
 
         if op == 1:
             print("\nOrdenamiento por nombre")
@@ -179,6 +176,7 @@ def sub_menu_5(nombre_archivo):
             sub_menu_5_1(paises)
             break
 
+
 def mayor_menor_poblacion(paises):
 
     mayor = paises[0]
@@ -195,6 +193,7 @@ def mayor_menor_poblacion(paises):
     print(f"País con menor población: {menor['nombre']} ({menor['poblacion']})")
     input("\nPresione una tecla para continuar.")
 
+
 def prom_poblacion(paises):
 
     suma = 0
@@ -207,6 +206,7 @@ def prom_poblacion(paises):
     print(f"\nPromedio de población: {promedio:.2f}")
     input("\nPresione una tecla para continuar.")
 
+
 def prom_superficie(paises):
 
     suma = 0
@@ -218,6 +218,7 @@ def prom_superficie(paises):
 
     print(f"\nPromedio de superficie: {promedio:.2f}")
     input("\nPresione una tecla para continuar.")
+
 
 def cant_continente(paises):
 
@@ -234,9 +235,8 @@ def cant_continente(paises):
     print()
 
     for continente, cantidad in continentes.items():
-        print(f"{continente}: {cantidad} país(es)")  
+        print(f"{continente}: {cantidad} país/es")  
     input("\nPresione una tecla para continuar.")  
-
 
 
 def sub_menu_6(nombre_archivo):
@@ -267,6 +267,7 @@ def sub_menu_6(nombre_archivo):
         elif op == 4:
             cant_continente(paises)
 
+
 def buscar_pais(nombre_archivo):
 
     pais = pedir_texto("Ingresar el nombre del país a buscar: ")
@@ -285,6 +286,7 @@ def buscar_pais(nombre_archivo):
 
         if not encontrado:
             print("\nNo se encontro un pais con ese nombre")
+
 
 def actualizar_pais(nombre_archivo,campos):
 
@@ -333,13 +335,14 @@ def agregar_pais(nombre_archivo,campos,todos):
 
     print("\nPaís guardado correctamente en el archivo CSV.")
 
+
 def nuevo_pais(nombre_archivo,todos):
     print("\nREGISRO DE NUEVO PAIS")
     lista =[]
     with open(nombre_archivo, "r", encoding = "utf-8") as archivo:
-         lector = csv.DictReader(archivo)
-         for pais in lector:
-             lista.append(pais)
+        lector = csv.DictReader(archivo)
+        for pais in lector:
+            lista.append(pais)
     
     while True:
         encontrado = False
@@ -372,12 +375,14 @@ def nuevo_pais(nombre_archivo,todos):
         "continente": continente
     }
 
+
 def pais_valido(nombre,todos):
     with open(todos, "r", encoding = "utf-8") as archivo:
         for i in archivo:
             if i.title().strip() == nombre:
                 return True
     return False        
+
 
 def pedir_entero(mensaje, minimo=0):
     
@@ -390,6 +395,7 @@ def pedir_entero(mensaje, minimo=0):
             return valor          
         except ValueError:
             print("Error: Ingresar un número entero válido.")
+
 
 def pedir_texto(mensaje):
     while True:
@@ -429,6 +435,3 @@ while op != 0:
         print("\nFin del preoceso.")
     else:
         print("\nOpcion incorrecta. Intentelo de nuevo")
-    
-
-
