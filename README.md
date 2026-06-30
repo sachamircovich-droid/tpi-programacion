@@ -25,6 +25,25 @@ Sistema de gestión de países desarrollado en Python utilizando archivos CSV.
 - README.md
 - .gitignore
 
+## Contribución de los integrantes
+
+### Sacha Mircovich
+- Creación y configuración del repositorio del proyecto.
+- Diseño de la estructura principal del programa.
+- Desarrollo de funcionalidades.
+- Elaboración del archivo README.md.
+- Diseño y elaboración de diagramas de flujo.
+
+### Pablo Lautaro Pereyra Pretz
+- Desarrollo de funcionalidades.
+- Implementación de validaciones de datos de entrada.
+- Depuración y corrección de errores.
+- Comentado y documentación del código.
+- Testeo y verificación del correcto funcionamiento del programa.
+- Diseño y elaboración de diagramas de flujo.
+- Preparación de la presentación y del video explicativo.
+
+
 ## Instrucciones de Uso
 - Tener instalado **Python 3.x**.
 - Contar con el archivo 'paises.csv' en la misma carpeta que el script ejecutable.
