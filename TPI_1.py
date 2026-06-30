@@ -1,9 +1,9 @@
-import csv
-todos = "lista de todos los países.txt"
-nombre_archivo = "paises.csv"
-campos = ["nombre", "poblacion", "superficie", "continente"]
+import csv # Modulo para manejo de archivo csv
+todos = "lista de todos los países.txt" # Dataset para validar ingreso de paises reales
+nombre_archivo = "paises.csv" # Nombre del dataset ubicado en el directorio del proyecto
+campos = ["nombre", "poblacion", "superficie", "continente"] # Claves del diccionario para el manejo de paises
 
-
+# Funcion que se encarga del filtrar paises por continente
 def filtrar_continente(nombre_archivo):
 
     encontrado = False
@@ -23,7 +23,7 @@ def filtrar_continente(nombre_archivo):
         if not encontrado:
             print(f"\nNo se encontro pais en el contienente {continente}")
 
-
+# Funcion que filta paises por poblacion
 def filtrar_poblacion(nombre_archivo):
     poblacion_min = pedir_entero("\nPoblación mínima: ")
     poblacion_max = pedir_entero("Población máxima: ", minimo=poblacion_min)
@@ -44,7 +44,7 @@ def filtrar_poblacion(nombre_archivo):
         if not encontrado:
             print("No hay países en ese rango.")
     
-
+# Funcion que filtra paises por superficie
 def filtrar_superficie(nombre_archivo):
     superficie_min = pedir_entero("\nSuperficie mínima: ")
     superficie_max = pedir_entero("Superficie máxima: ", minimo=superficie_min)
@@ -65,7 +65,7 @@ def filtrar_superficie(nombre_archivo):
         if not encontrado:
             print("No hay países en ese rango.")
 
-
+# Funcion que despliega menú para filtrar paises
 def sub_menu_4(nombre_archivo):
 
     op = -1
@@ -85,14 +85,14 @@ def sub_menu_4(nombre_archivo):
         elif op == 3:
             filtrar_superficie(nombre_archivo)
 
-
+# Funcion que imprime una lista de paises
 def mostrar_paises(paises):
     print()
     for fila in paises:
         print(f"{fila['nombre']:<15} Poblacion: {fila['poblacion']:<15} Superficie: {fila['superficie']:<15} Continente: {fila['continente']:<15}")
 
 
-# Ordenamiento de selección directa
+# Funcion que se encarga de realizar un ordenamiento de selección directa
 def ordenar_paises(paises, campo, ascendente=True):
 
     for i in range(len(paises) - 1):
@@ -118,7 +118,7 @@ def ordenar_paises(paises, campo, ascendente=True):
 
     return paises
 
-
+# Funcion que se encarga de seleccionar el formato ascendente o descendente para el ordenamiento de países por superficie
 def sub_menu_5_1(paises):
 
     op = -1
@@ -143,7 +143,7 @@ def sub_menu_5_1(paises):
             input("\nPresione una tecla para continuar.")
             break
 
-
+# Funcion que despliega menú para seleccionar tipo de ordenamiento deseado
 def sub_menu_5(nombre_archivo):
 
     
@@ -176,7 +176,7 @@ def sub_menu_5(nombre_archivo):
             sub_menu_5_1(paises)
             break
 
-
+# Funcion que muestra paises con mayor y menor poblacion
 def mayor_menor_poblacion(paises):
 
     mayor = paises[0]
@@ -193,7 +193,7 @@ def mayor_menor_poblacion(paises):
     print(f"País con menor población: {menor['nombre']} ({menor['poblacion']})")
     input("\nPresione una tecla para continuar.")
 
-
+# Funcion que muestra el promedio de población de los países
 def prom_poblacion(paises):
 
     suma = 0
@@ -206,7 +206,7 @@ def prom_poblacion(paises):
     print(f"\nPromedio de población: {promedio:.2f}")
     input("\nPresione una tecla para continuar.")
 
-
+# Funcion que muestra el promedio de superficie de los países
 def prom_superficie(paises):
 
     suma = 0
@@ -219,7 +219,7 @@ def prom_superficie(paises):
     print(f"\nPromedio de superficie: {promedio:.2f}")
     input("\nPresione una tecla para continuar.")
 
-
+# Funcion que muestra cuantos paises hay por continente
 def cant_continente(paises):
 
     continentes = {}
@@ -238,7 +238,7 @@ def cant_continente(paises):
         print(f"{continente}: {cantidad} país/es")  
     input("\nPresione una tecla para continuar.")  
 
-
+# Funcion que despliega menú para seleccionar estadísticas que se desean mostrar
 def sub_menu_6(nombre_archivo):
     
     with open(nombre_archivo, "r", encoding="utf-8") as archivo:
@@ -267,7 +267,7 @@ def sub_menu_6(nombre_archivo):
         elif op == 4:
             cant_continente(paises)
 
-
+# Funcion que busca un pais por nombre y muestra los datos del mismo 
 def buscar_pais(nombre_archivo):
 
     pais = pedir_texto("Ingresar el nombre del país a buscar: ")
@@ -287,7 +287,7 @@ def buscar_pais(nombre_archivo):
         if not encontrado:
             print("\nNo se encontro un pais con ese nombre")
 
-
+# Funcion que busca un pais por nombre y permite modificar datos de superficie y población.
 def actualizar_pais(nombre_archivo,campos):
 
     paises = []
@@ -325,7 +325,7 @@ def actualizar_pais(nombre_archivo,campos):
         
         print("\nPaís actualizado correctamente.")
 
-
+# Funcion que agrega un nuevo pais al dataset
 def agregar_pais(nombre_archivo,campos,todos):
 
     with open(nombre_archivo, "a", encoding="utf-8", newline="") as archivo:
@@ -335,7 +335,7 @@ def agregar_pais(nombre_archivo,campos,todos):
 
     print("\nPaís guardado correctamente en el archivo CSV.")
 
-
+# Funcion que verifica si el pais que desea agregar existe y genera los datos de poblacion, superficie y continente
 def nuevo_pais(nombre_archivo,todos):
     print("\nREGISRO DE NUEVO PAIS")
     lista =[]
@@ -375,7 +375,7 @@ def nuevo_pais(nombre_archivo,todos):
         "continente": continente
     }
 
-
+# Funcion que virifica si el pais que desea agregar existe
 def pais_valido(nombre,todos):
     with open(todos, "r", encoding = "utf-8") as archivo:
         for i in archivo:
@@ -383,7 +383,7 @@ def pais_valido(nombre,todos):
                 return True
     return False        
 
-
+# funcion que valida un ingreso de numero entero
 def pedir_entero(mensaje, minimo=0):
     
     while True:
@@ -396,7 +396,7 @@ def pedir_entero(mensaje, minimo=0):
         except ValueError:
             print("Error: Ingresar un número entero válido.")
 
-
+# Funcion que valida un ingreso de string
 def pedir_texto(mensaje):
     while True:
         valor = input(mensaje).strip().title()
@@ -406,6 +406,7 @@ def pedir_texto(mensaje):
             print("Error: No debe ingresar numero ni ingresar un espacio vacio")
             continue
 
+# Menu principal de opciones
 op = -1
 while op != 0:
     print("\nMENU DE OPCIONES")
